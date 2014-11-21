@@ -8,9 +8,18 @@ function Xb = minkowskiSum(X,b)
 	condFirst = true;
 	for i=1:lb
 		for j=1:cb
-			%pas d'autre boucle a partir d'ici, deux boucles sont suffisantes
+			if(b(i,j)==1)
+				if(condFirst)
+					Xb(i:i+L-1,j:j+C-1) = X;
+					condFirst = false;
+				else
+					tmp(i:i+L-1,j:j+C-1) = X;
+					Xb = or(Xb,tmp);
+					tmp(:) = 0;
+				endif
+			endif
 		endfor
 	endfor
-	%crop le resultat pour qu'il soit de la meme taille que l'image d'entree
 	Xb = Xb((floor(lb/2)+1):(L+floor(lb/2)),(floor(cb/2)+1):(C+floor(cb/2)));
+	
 endfunction
